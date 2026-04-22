@@ -83,15 +83,6 @@
     background: var(--blue-grad);
     padding: 20px 20px 28px;
     position: relative;
-    overflow: hidden;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: 0; right: 0;
-    height: 40px;
-    background: var(--gray-50);
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
   .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .header-brand { color: white; }
@@ -137,15 +128,6 @@
     background: var(--blue-grad);
     padding: 24px 20px 32px;
     position: relative;
-    overflow: hidden;
-  }
-  .header-simple::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: 0; right: 0;
-    height: 40px;
-    background: var(--gray-50);
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
   .header-simple h1 { color: white; font-size: 20px; font-weight: 900; }
   .header-simple p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 3px; font-weight: 500; }
