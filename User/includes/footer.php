@@ -63,7 +63,8 @@
         <div class="amount-value" id="qris-amount">Rp 0</div>
       </div>
       <div class="qris-info">⚠️ Pastikan Anda memiliki aplikasi E-Wallet/Mobile Banking yang mendukung QRIS di perangkat Anda untuk menyelesaikan pembayaran.</div>
-      <button class="checkout-btn" onclick="downloadQRIS()">⬇️ Download QRIS</button>
+      <button class="checkout-btn" onclick="confirmQrisOrder()" style="background: var(--success); margin-bottom: 8px;">✅ Konfirmasi Sudah Bayar</button>
+      <button class="checkout-btn" onclick="downloadQRIS()" style="background: var(--primary-light); color: var(--primary-dark);">⬇️ Download QRIS</button>
       <button class="btn-primary" style="width:100%;background:white;color:var(--gray-600);box-shadow:none;border:2px solid var(--gray-200)" onclick="closeModal('modal-qris')">Tutup</button>
     </div>
   </div>
@@ -89,7 +90,7 @@
 
   <!-- ───── TOAST ───── -->
   <div class="toast" id="toast"></div>
-</div>
+</div><!-- .app -->
 
 <script src="assets/js/meja-teras-jti.js"></script>
 </body>

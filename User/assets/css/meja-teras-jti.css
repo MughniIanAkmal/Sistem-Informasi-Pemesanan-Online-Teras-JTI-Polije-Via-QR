@@ -43,6 +43,37 @@
     flex-direction: column;
   }
 
+  /* ───── CLOSED PAGE ───── */
+  .closed-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue-grad);
+    padding: 2rem;
+    width: 100%;
+  }
+  .closed-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .closed-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .closed-card h2 { font-size: 1.5rem; font-weight: 900; color: var(--gray-800); margin-bottom: 0.5rem; }
+  .closed-card p  { color: var(--gray-600); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; font-weight: 500; }
+  .closed-hours {
+    background: var(--blue-light);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    font-size: 1rem;
+  }
+
   /* ───── PAGES ───── */
   .page { display: none; flex-direction: column; flex: 1; padding-bottom: 80px; overflow-y: auto; }
   .page.active { display: flex; }

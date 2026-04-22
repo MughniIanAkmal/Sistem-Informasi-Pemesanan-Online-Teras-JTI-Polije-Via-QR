@@ -26,27 +26,10 @@
       <button class="cat-btn" onclick="filterCategory('snack', this)">🍟 Snack</button>
     </div>
 
-    <div id="promo-section" class="section">
+    <div id="promo-section" class="section" style="display: none;">
       <div class="section-title">🔥 Promo Spesial</div>
-      <div class="promo-grid">
-        <div class="promo-card" style="animation-delay:0s">
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&q=80" alt="Nasi Goreng">
-          <div class="promo-info">
-            <div class="name">Nasi Goreng Spesial</div>
-            <div class="old-price">Rp 25.000</div>
-            <div class="new-price">Rp 20.000</div>
-          </div>
-          <span class="promo-badge">PROMO</span>
-        </div>
-        <div class="promo-card" style="animation-delay:0.05s">
-          <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=300&q=80" alt="Chicken Wings">
-          <div class="promo-info">
-            <div class="name">Chicken Wings</div>
-            <div class="old-price">Rp 35.000</div>
-            <div class="new-price">Rp 24.000</div>
-          </div>
-          <span class="promo-badge">PROMO</span>
-        </div>
+      <div class="promo-grid" id="promo-grid">
+        <!-- Promo items will be rendered here dynamically -->
       </div>
     </div>
 
