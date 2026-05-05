@@ -43,13 +43,6 @@
             </a>
         </li>
 
-        <li class="menu-item" style="margin-top: 2rem;">
-            <div style="padding: 0 1.25rem; font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">System</div>
-            <a href="../settings/index.php" class="menu-link <?= strpos($_SERVER['PHP_SELF'], 'settings') !== false ? 'active' : '' ?>">
-                <i class="fa-solid fa-gear"></i>
-                <span class="menu-text">Pengaturan</span>
-            </a>
-        </li>
     </ul>
 
     <div class="sidebar-footer">

@@ -7,10 +7,7 @@
           <h1>MEJA TERAS JTI</h1>
           <p>Pesan menu favoritmu sekarang</p>
         </div>
-        <div class="table-badge">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Meja 1
-        </div>
+
       </div>
       <div class="search-bar">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>

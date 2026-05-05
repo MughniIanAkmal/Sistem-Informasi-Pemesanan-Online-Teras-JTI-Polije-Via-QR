@@ -30,16 +30,7 @@ $stmtItems = $pdo->prepare("
 $stmtItems->execute([$id]);
 $items = $stmtItems->fetchAll();
 
-// Handle status update
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
-    $newStatus = $_POST['status'];
-    $allowed = ['Masuk', 'Proses', 'Selesai'];
-    if (in_array($newStatus, $allowed)) {
-        $pdo->prepare("UPDATE pesanan SET status = ? WHERE id = ?")->execute([$newStatus, $id]);
-        header("Location: view_order.php?id=$id&updated=1");
-        exit;
-    }
-}
+// Handle status update removed (moved to Kasir)
 ?>
 
 <main class="main-content">
@@ -124,16 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
                 </div>
             </div>
 
-            <div class="content-card">
-                <h3 class="card-title" style="margin-bottom: 1rem;">Ubah Status</h3>
-                <form method="POST" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                    <select name="status" class="form-control" style="padding-left: 1rem; appearance: auto;">
-                        <option value="Masuk"   <?= $order['status'] === 'Masuk'   ? 'selected' : '' ?>>🟡 Masuk</option>
-                        <option value="Proses"  <?= $order['status'] === 'Proses'  ? 'selected' : '' ?>>🔵 Diproses</option>
-                        <option value="Selesai" <?= $order['status'] === 'Selesai' ? 'selected' : '' ?>>🟢 Selesai</option>
-                    </select>
-                    <button type="submit" class="btn-auth" style="margin-top: 0;">Simpan Status</button>
-                </form>
+            <div class="content-card" style="background: rgba(100,116,139,0.05); border: 1px dashed var(--border);">
+                <div style="font-size: 0.8125rem; color: var(--text-muted); text-align: center; padding: 1rem;">
+                    <i class="fa-solid fa-lock" style="margin-bottom: 0.5rem; font-size: 1.25rem;"></i><br>
+                    Pengubahan status pesanan saat ini dikelola melalui <strong>Panel Kasir</strong>.
+                </div>
             </div>
         </div>
     </div>

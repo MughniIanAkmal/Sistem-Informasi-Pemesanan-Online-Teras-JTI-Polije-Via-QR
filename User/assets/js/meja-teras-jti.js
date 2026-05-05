@@ -6,6 +6,7 @@ let searchQ = '';
 let guestCount = 5;
 let payMethod = 'qris';
 let qrisTimer = null;
+let nomorMeja = '';  // Will be set by customer before payment
 
 // ────────────────────────── FETCH MENU ──────────────────────────
 async function fetchMenu() {
@@ -48,20 +49,25 @@ function renderMenu() {
 
   let items = menuData;
 
-  // Render Promo (Top 2)
-  if (promoGrid && promoSec && currentCat === 'semua' && !searchQ && items.length > 0) {
+  // ── Render Promo Special (products marked is_promo by admin) ──
+  const promoItems = items.filter(p => p.is_promo === 1 || p.is_promo === true);
+  if (promoGrid && promoSec && currentCat === 'semua' && !searchQ && promoItems.length > 0) {
     promoSec.style.display = 'block';
-    const promos = items.slice(0, 2);
-    promoGrid.innerHTML = promos.map(p => `
-      <div class="promo-card" onclick="addToCart(${p.id})">
-        <img src="${p.img}" alt="${p.name}">
-        <div class="promo-info">
-          <div class="name">${p.name}</div>
-          <div class="new-price">Rp ${Number(p.price).toLocaleString('id-ID')}</div>
+    promoGrid.innerHTML = promoItems.map(p => {
+      const finalPrice = p.price_final ?? p.price;
+      const hasDiskon  = p.diskon > 0;
+      return `
+        <div class="promo-card" onclick="addToCart(${p.id})">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="promo-info">
+            <div class="name">${p.name}</div>
+            ${hasDiskon ? `<div class="old-price" style="font-size:.75rem; text-decoration:line-through; color:rgba(255,255,255,.65); margin-bottom:1px;">Rp ${Number(p.price).toLocaleString('id-ID')}</div>` : ''}
+            <div class="new-price">Rp ${Number(finalPrice).toLocaleString('id-ID')}</div>
+          </div>
+          ${hasDiskon ? `<span class="promo-badge">-${p.diskon}%</span>` : '<span class="promo-badge">HOT</span>'}
         </div>
-        <span class="promo-badge">HOT</span>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   } else if (promoSec) {
     promoSec.style.display = 'none';
   }
@@ -78,17 +84,28 @@ function renderMenu() {
   }
   
   if (emptyEl) emptyEl.style.display = 'none';
-  grid.innerHTML = items.map((item, i) => `
-    <div class="menu-card" style="animation-delay:${i * 0.05}s">
-      <img src="${item.img}" alt="${item.name}" loading="lazy">
-      <div class="menu-body">
-        <div class="menu-name">${item.name}</div>
-        <div class="menu-desc">${item.desc || ''}</div>
-        <div class="menu-price">Rp ${Number(item.price).toLocaleString('id-ID')}</div>
-        <button class="add-btn" onclick="addToCart(${item.id})">+ Tambahkan</button>
+  grid.innerHTML = items.map((item, i) => {
+    const finalPrice = item.price_final ?? item.price;
+    const hasDiskon  = item.diskon > 0;
+    return `
+      <div class="menu-card" style="animation-delay:${i * 0.05}s">
+        <div style="position:relative;">
+          <img src="${item.img}" alt="${item.name}" loading="lazy">
+          ${hasDiskon ? `<span style="position:absolute; top:.5rem; right:.5rem; background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; font-size:.65rem; font-weight:800; padding:2px 8px; border-radius:9999px;">-${item.diskon}%</span>` : ''}
+          ${item.is_promo ? `<span style="position:absolute; top:.5rem; left:.5rem; background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; font-size:.6rem; font-weight:800; padding:2px 7px; border-radius:9999px;">🔥</span>` : ''}
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">${item.name}</div>
+          <div class="menu-desc">${item.desc || ''}</div>
+          <div class="menu-price">
+            ${hasDiskon ? `<span style="font-size:.75rem; text-decoration:line-through; color:#94a3b8; margin-right:.25rem;">Rp ${Number(item.price).toLocaleString('id-ID')}</span>` : ''}
+            Rp ${Number(finalPrice).toLocaleString('id-ID')}
+          </div>
+          <button class="add-btn" onclick="addToCart(${item.id})">+ Tambahkan</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // ────────────────────────── PAGE SWITCH ──────────────────────────
@@ -114,7 +131,9 @@ function addToCart(id) {
   if (existing) {
     existing.qty++;
   } else {
-    cart.push({ id: item.id, name: item.name, price: item.price, img: item.img, qty: 1 });
+    // Use price_final (after discount) as the cart price
+    const cartPrice = item.price_final ?? item.price;
+    cart.push({ id: item.id, name: item.name, price: cartPrice, img: item.img, qty: 1 });
   }
   updateCartBadge();
   showToast(`✅ ${item.name} ditambahkan!`);
@@ -203,21 +222,45 @@ function selectPayment(method) {
 
 function doCheckout() {
   if (cart.length === 0) { showToast('Keranjang masih kosong!'); return; }
+  // Show nomor meja modal first, then proceed to payment
+  const input = document.getElementById('input-nomor-meja');
+  if (input) input.value = nomorMeja; // pre-fill if already set
+  openModal('modal-nomor-meja');
+}
+
+function confirmNomorMeja() {
+  const input = document.getElementById('input-nomor-meja');
+  const val = input ? input.value.trim() : '';
+
+  if (!val || isNaN(val) || Number(val) < 1) {
+    showToast('⚠️ Harap isi nomor meja yang valid!');
+    if (input) {
+      input.classList.add('shake');
+      setTimeout(() => input.classList.remove('shake'), 500);
+      input.focus();
+    }
+    return;
+  }
+
+  nomorMeja = val;
+  closeModal('modal-nomor-meja');
+
+  // Now proceed to the payment modal
   const sub   = cart.reduce((s, c) => s + Number(c.price) * c.qty, 0);
   const total = sub + Math.round(sub * 0.05);
 
-  if (payMethod === 'qris') {
-    const qAmount = document.getElementById('qris-amount');
-    if (qAmount) qAmount.textContent = 'Rp ' + total.toLocaleString('id-ID');
-    openModal('modal-qris');
-    startQrisTimer();
-  } else {
-    const cAmount = document.getElementById('cash-amount');
-    if (cAmount) cAmount.textContent = 'Rp ' + total.toLocaleString('id-ID');
-    openModal('modal-cash');
-  }
+  setTimeout(() => {
+    if (payMethod === 'qris') {
+      const qAmount = document.getElementById('qris-amount');
+      if (qAmount) qAmount.textContent = 'Rp ' + total.toLocaleString('id-ID');
+      openModal('modal-qris');
+    } else {
+      const cAmount = document.getElementById('cash-amount');
+      if (cAmount) cAmount.textContent = 'Rp ' + total.toLocaleString('id-ID');
+      openModal('modal-cash');
+    }
+  }, 350);
 }
-
 function startQrisTimer() {
   if (qrisTimer) clearInterval(qrisTimer);
   let seconds = 5 * 60 - 1;
@@ -249,14 +292,7 @@ function downloadQRIS() {
 
 // ────────────────────────── CHECKOUT ──────────────────────────
 function getNomorMeja() {
-  // Extract from the table-badge element, e.g. "Meja 1"
-  const badge = document.querySelector('.table-badge');
-  if (badge) {
-    // strip the SVG icon text, keep only the text node
-    const text = badge.innerText || badge.textContent;
-    return text.trim();
-  }
-  return 'Meja 1';
+  return nomorMeja ? 'Meja ' + nomorMeja : 'Tidak Diketahui';
 }
 
 async function confirmOrder(method) {
@@ -340,8 +376,70 @@ function filterSearch() {
   renderMenu();
 }
 
+// ────────────────────────── RESERVASI ──────────────────────────
+function changeGuest(delta) {
+  guestCount += delta;
+  if (guestCount < 1) guestCount = 1;
+  if (guestCount > 50) guestCount = 50;
+
+  const guestNum = document.getElementById('guest-num');
+  if (guestNum) guestNum.textContent = guestCount;
+
+  const sumTamu = document.getElementById('sum-tamu');
+  if (sumTamu) sumTamu.textContent = guestCount + ' orang';
+}
+
+function submitReservasi() {
+  const nama    = document.getElementById('res-nama')?.value.trim();
+  const telp    = document.getElementById('res-telp')?.value.trim();
+  const email   = document.getElementById('res-email')?.value.trim();
+  const tanggal = document.getElementById('res-tanggal')?.value;
+  const waktu   = document.getElementById('res-waktu')?.value;
+  const catatan = document.getElementById('res-catatan')?.value.trim();
+  const tamu    = guestCount;
+
+  // Validasi
+  if (!nama) { showToast('Harap isi nama lengkap!'); return; }
+  if (!telp) { showToast('Harap isi nomor telepon!'); return; }
+  if (!email) { showToast('Harap isi email!'); return; }
+  if (!tanggal) { showToast('Harap pilih tanggal!'); return; }
+  if (!waktu) { showToast('Harap pilih waktu!'); return; }
+
+  // Format tanggal ke dd/mm/yyyy
+  const tglParts = tanggal.split('-');
+  const tglFormatted = tglParts[2] + '/' + tglParts[1] + '/' + tglParts[0];
+
+  // Compose WhatsApp message
+  let pesan = `Halo, saya ingin melakukan *Reservasi* di Teras JTI.
+
+*Data Reservasi:*
+- Nama: ${nama}
+- Telepon: ${telp}
+- Email: ${email}
+- Tanggal: ${tglFormatted}
+- Waktu: ${waktu} WIB
+- Jumlah Tamu: ${tamu} orang`;
+
+  if (catatan) {
+    pesan += `\n- Catatan: ${catatan}`;
+  }
+
+  pesan += `\n\nMohon konfirmasi ketersediaannya. Terima kasih!`;
+
+  // WhatsApp number: 088228518259 -> international format: 6288228518259
+  const nomorWA = '6288228518259';
+  const waURL = 'https://wa.me/' + nomorWA + '?text=' + encodeURIComponent(pesan);
+
+  showToast('Mengalihkan ke WhatsApp...');
+  setTimeout(() => {
+    window.open(waURL, '_blank');
+  }, 500);
+}
+
 // ────────────────────────── INIT ──────────────────────────
 window.addEventListener('load', () => {
   console.log('Window loaded, initializing...');
   fetchMenu();
+  // Initialize guest count display
+  changeGuest(0);
 });

@@ -42,14 +42,10 @@
           <textarea class="form-input" placeholder="Tulis catatan disini" id="res-catatan" style="height:80px;resize:none;"></textarea>
         </div>
         <div class="ringkasan-card">
-          <div class="ringkasan-title">📋 Ringkasan</div>
+          <div class="ringkasan-title">Ringkasan</div>
           <div class="ringkasan-row">
-            <span>Tamu</span>
+            <span>Jumlah Tamu</span>
             <span id="sum-tamu">5 orang</span>
-          </div>
-          <div class="ringkasan-row deposit">
-            <span>Deposit</span>
-            <span id="sum-deposit">Rp 100.000</span>
           </div>
         </div>
         <button class="checkout-btn" onclick="submitReservasi()" style="margin-top:16px">Konfirmasi Reservasi</button>

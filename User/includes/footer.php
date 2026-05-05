@@ -16,56 +16,44 @@
     </div>
   </nav>
 
+  <!-- ═══════════════════════════════════ MODAL: NOMOR MEJA ═══════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-nomor-meja">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">📍 Masukkan Nomor Meja</div>
+      <div class="modal-sub">Silakan isi nomor meja kamu sebelum melanjutkan pembayaran</div>
+      <div class="meja-input-box">
+        <div class="meja-icon-wrap">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <label for="input-nomor-meja">Nomor Meja</label>
+        <input type="number" id="input-nomor-meja" class="form-input meja-input" placeholder="Contoh: 1, 2, 3..." min="1" max="99" inputmode="numeric">
+        <div class="meja-hint">Nomor meja bisa dilihat pada kartu yang ada di meja kamu</div>
+      </div>
+      <button class="checkout-btn meja-confirm-btn" id="btn-confirm-meja" onclick="confirmNomorMeja()">Lanjutkan ke Pembayaran →</button>
+      <button class="btn-primary" style="width:100%;background:white;color:var(--gray-600);box-shadow:none;border:2px solid var(--gray-200);margin-top:10px" onclick="closeModal('modal-nomor-meja')">Kembali</button>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════ MODAL: QRIS ═══════════════════════════════════ -->
   <div class="modal-overlay" id="modal-qris">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div class="modal-title">Bayar dengan QRIS</div>
-      <div class="modal-sub">Scan atau download QRIS untuk melanjutkan<br>pembayaran Anda melalui E-Wallet atau Mobile Banking</div>
-      <div class="qris-box">
-        <div class="qris-svg-wrap">
-          <!-- Static QR Pattern (SVG) -->
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated">
-            <!-- Corner squares -->
-            <rect x="5" y="5" width="30" height="30" fill="none" stroke="#000" stroke-width="4"/>
-            <rect x="12" y="12" width="16" height="16" fill="#000"/>
-            <rect x="65" y="5" width="30" height="30" fill="none" stroke="#000" stroke-width="4"/>
-            <rect x="72" y="12" width="16" height="16" fill="#000"/>
-            <rect x="5" y="65" width="30" height="30" fill="none" stroke="#000" stroke-width="4"/>
-            <rect x="12" y="72" width="16" height="16" fill="#000"/>
-            <!-- Dots pattern -->
-            <rect x="42" y="5" width="6" height="6" fill="#000"/><rect x="52" y="5" width="6" height="6" fill="#000"/>
-            <rect x="42" y="15" width="6" height="6" fill="#000"/><rect x="58" y="15" width="6" height="6" fill="#000"/>
-            <rect x="47" y="25" width="6" height="6" fill="#000"/><rect x="57" y="25" width="6" height="6" fill="#000"/>
-            <rect x="5" y="42" width="6" height="6" fill="#000"/><rect x="15" y="42" width="6" height="6" fill="#000"/>
-            <rect x="25" y="42" width="6" height="6" fill="#000"/><rect x="5" y="52" width="6" height="6" fill="#000"/>
-            <rect x="20" y="52" width="6" height="6" fill="#000"/><rect x="30" y="52" width="6" height="6" fill="#000"/>
-            <rect x="10" y="57" width="6" height="6" fill="#000"/><rect x="25" y="62" width="6" height="6" fill="#000"/>
-            <rect x="42" y="42" width="6" height="6" fill="#000"/><rect x="52" y="42" width="6" height="6" fill="#000"/>
-            <rect x="62" y="42" width="6" height="6" fill="#000"/><rect x="72" y="42" width="6" height="6" fill="#000"/>
-            <rect x="82" y="42" width="6" height="6" fill="#000"/><rect x="42" y="52" width="6" height="6" fill="#000"/>
-            <rect x="57" y="52" width="6" height="6" fill="#000"/><rect x="67" y="52" width="6" height="6" fill="#000"/>
-            <rect x="47" y="62" width="6" height="6" fill="#000"/><rect x="62" y="62" width="6" height="6" fill="#000"/>
-            <rect x="42" y="72" width="6" height="6" fill="#000"/><rect x="52" y="72" width="6" height="6" fill="#000"/>
-            <rect x="62" y="72" width="6" height="6" fill="#000"/><rect x="77" y="72" width="6" height="6" fill="#000"/>
-            <rect x="42" y="82" width="6" height="6" fill="#000"/><rect x="57" y="82" width="6" height="6" fill="#000"/>
-            <rect x="72" y="82" width="6" height="6" fill="#000"/><rect x="87" y="82" width="6" height="6" fill="#000"/>
-          </svg>
-        </div>
-        <div class="qris-label">QRIS · TERAS JTI</div>
+      <div class="cash-box">
+        <div class="cash-icon">📲</div>
+        <div class="cash-title">Silakan menuju ke Kasir</div>
+        <div class="cash-desc">Tunjukkan pesananmu kepada petugas kasir dan lakukan pembayaran menggunakan QRIS. Petugas kami siap membantu Anda!</div>
       </div>
-      <div class="timer-wrap">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span id="qris-timer">4 menit : 59 detik</span>
-      </div>
-      <div class="amount-box">
-        <div class="amount-label">Jumlah Tagihan</div>
+      <div class="amount-box" style="margin-bottom:20px">
+        <div class="amount-label">Total yang Harus Dibayar</div>
         <div class="amount-value" id="qris-amount">Rp 0</div>
       </div>
-      <div class="qris-info">⚠️ Pastikan Anda memiliki aplikasi E-Wallet/Mobile Banking yang mendukung QRIS di perangkat Anda untuk menyelesaikan pembayaran.</div>
-      <button class="checkout-btn" onclick="confirmQrisOrder()" style="background: var(--success); margin-bottom: 8px;">✅ Konfirmasi Sudah Bayar</button>
-      <button class="checkout-btn" onclick="downloadQRIS()" style="background: var(--primary-light); color: var(--primary-dark);">⬇️ Download QRIS</button>
-      <button class="btn-primary" style="width:100%;background:white;color:var(--gray-600);box-shadow:none;border:2px solid var(--gray-200)" onclick="closeModal('modal-qris')">Tutup</button>
+      <button class="checkout-btn" onclick="confirmQrisOrder()" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); box-shadow: 0 8px 24px rgba(34,197,94,0.3); margin-bottom: 8px;">✅ Konfirmasi Pesanan</button>
+      <button class="btn-primary" style="width:100%;background:white;color:var(--gray-600);box-shadow:none;border:2px solid var(--gray-200);margin-top:10px" onclick="closeModal('modal-qris')">Kembali</button>
     </div>
   </div>
 
@@ -83,7 +71,7 @@
         <div class="amount-label">Total yang Harus Dibayar</div>
         <div class="amount-value" id="cash-amount">Rp 0</div>
       </div>
-      <button class="checkout-btn" onclick="confirmCashOrder()">✅ Konfirmasi Pesanan</button>
+      <button class="checkout-btn" onclick="confirmCashOrder()" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); box-shadow: 0 8px 24px rgba(34,197,94,0.3);">✅ Konfirmasi Pesanan</button>
       <button class="btn-primary" style="width:100%;background:white;color:var(--gray-600);box-shadow:none;border:2px solid var(--gray-200);margin-top:10px" onclick="closeModal('modal-cash')">Kembali</button>
     </div>
   </div>
@@ -92,6 +80,6 @@
   <div class="toast" id="toast"></div>
 </div><!-- .app -->
 
-<script src="assets/js/meja-teras-jti.js"></script>
+<script src="assets/js/meja-teras-jti.js?v=<?= time() ?>"></script>
 </body>
 </html>
