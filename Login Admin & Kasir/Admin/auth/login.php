@@ -7,20 +7,29 @@ if (isset($_SESSION['admin_logged_in'])) {
     header('Location: ../dashboard/index.php');
     exit;
 }
+if (isset($_SESSION['kasir_logged_in'])) {
+    header('Location: ../../Kasir/dashboard/index.php');
+    exit;
+}
 
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // Simulasi login untuk demo - Silakan ganti dengan query database asli
-    // Contoh: SELECT * FROM users WHERE username = ? AND role = 'admin'
-    
-    if ($username === 'Admin' && $password === '123') {
+    // Cek Login Admin (case-insensitive)
+    if (strtolower($username) === 'admin' && $password === '123') {
         $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_user'] = $username;
+        $_SESSION['admin_user'] = 'Admin';
         header('Location: ../dashboard/index.php');
+        exit;
+    }
+    // Cek Login Kasir (case-insensitive)
+    elseif (strtolower($username) === 'kasir' && $password === '123') {
+        $_SESSION['kasir_logged_in'] = true;
+        $_SESSION['kasir_user'] = 'Kasir';
+        header('Location: ../../Kasir/dashboard/index.php');
         exit;
     } else {
         $error = 'Username atau password salah.';

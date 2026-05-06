@@ -1,9 +1,6 @@
 <?php
 /**
- * TERAS JTI — One-Click Complete Setup
- * ======================================
- * Open in browser: http://localhost/Project Smster 2/setup.php
- * Run this ONCE to set up everything.
+* http://localhost/Project Smster 2/setup.php
  */
 require_once 'includes/db.php';
 $results = [];

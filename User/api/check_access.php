@@ -8,7 +8,6 @@ date_default_timezone_set('Asia/Jakarta');
 try {
     $rows = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(PDO::FETCH_KEY_PAIR);
 } catch (PDOException $e) {
-    // Settings table may not exist yet — default to open
     echo json_encode(['open' => true, 'message' => '']);
     exit;
 }
