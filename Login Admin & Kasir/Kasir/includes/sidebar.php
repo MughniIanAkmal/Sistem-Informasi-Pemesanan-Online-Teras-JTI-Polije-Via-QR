@@ -11,12 +11,7 @@ $currentPath = $_SERVER['PHP_SELF'];
 <aside class="sidebar">
     <div class="sidebar-header">
         <!-- Kasir icon (blue) -->
-        <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="8 4"/>
-            <path d="M30 38h40M30 50h30M30 62h20" stroke="#0EA5E9" stroke-width="6" stroke-linecap="round"/>
-            <circle cx="72" cy="62" r="10" fill="#0EA5E9"/>
-            <path d="M68 62l3 3 5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="../../../User/assets/img/Logo Teras JTI.png" alt="Logo Teras JTI" width="34" height="34" style="object-fit: contain;">
         <div>
             <div class="sidebar-brand-name">Teras JTI</div>
             <div class="sidebar-role">Kasir</div>
@@ -38,7 +33,7 @@ $currentPath = $_SERVER['PHP_SELF'];
             <a href="../pesanan/index.php"
                class="menu-link <?= strpos($currentPath, 'pesanan') !== false ? 'active' : '' ?>">
                 <i class="fa-solid fa-receipt"></i>
-                <span class="menu-text">Konfirmasi Pesanan</span>
+                <span class="menu-text">Kelola Pesanan</span>
                 <?php if ($pendingCount > 0): ?>
                     <span class="badge-pill"><?= $pendingCount ?></span>
                 <?php endif; ?>

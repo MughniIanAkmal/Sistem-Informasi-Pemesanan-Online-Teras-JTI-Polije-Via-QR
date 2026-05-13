@@ -94,6 +94,12 @@ $items = $stmtItems->fetchAll();
                         <span style="color: var(--text-muted);">Metode Bayar</span>
                         <strong><?= htmlspecialchars($order['metode_pembayaran'] ?? '-') ?></strong>
                     </div>
+                    <?php if (!empty($order['catatan'])): ?>
+                    <div style="display: flex; justify-content: space-between; gap: 1rem;">
+                        <span style="color: var(--text-muted);">Catatan</span>
+                        <strong style="text-align: right; word-break: break-word;"><?= htmlspecialchars($order['catatan']) ?></strong>
+                    </div>
+                    <?php endif; ?>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: var(--text-muted);">Waktu</span>
                         <strong><?= date('H:i, d M Y', strtotime($order['created_at'])) ?></strong>

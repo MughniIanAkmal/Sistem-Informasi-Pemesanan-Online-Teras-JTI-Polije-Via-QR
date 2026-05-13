@@ -68,7 +68,7 @@ $isOpen = $tokoTutup !== '1' && $now >= $buka && $now <= $tutup && in_array($now
                          box-shadow:0 0 0 3px <?= $isOpen ? 'rgba(16,185,129,.2)' : 'rgba(239,68,68,.2)' ?>;
                          animation:pulse 2s infinite;"></span>
             <span style="font-weight:700;font-size:.875rem;color:<?= $isOpen ? 'var(--success)' : 'var(--error)' ?>;">
-                <?= $isOpen ? 'Toko Sedang BUKA' : 'Toko Sedang TUTUP' ?>
+                <?= $isOpen ? 'Cafe Sedang BUKA' : 'Cafe Sedang TUTUP' ?>
             </span>
         </div>
     </div>
@@ -92,7 +92,7 @@ $isOpen = $tokoTutup !== '1' && $now >= $buka && $now <= $tutup && in_array($now
 
                 <!-- Status Toggle -->
                 <div class="content-card">
-                    <h3 class="card-title" style="margin-bottom:1.25rem;">🔒 Status Toko</h3>
+                    <h3 class="card-title" style="margin-bottom:1.25rem;">🔒 Status Cafe</h3>
                     <label id="status-label" style="display:flex;align-items:center;gap:14px;cursor:pointer;padding:16px;
                         background:<?= $tokoTutup=='1' ? 'rgba(239,68,68,.08)' : 'rgba(16,185,129,.08)' ?>;
                         border-radius:var(--radius-md);border:2px solid <?= $tokoTutup=='1' ? 'rgba(239,68,68,.2)' : 'rgba(16,185,129,.2)' ?>;
@@ -112,9 +112,9 @@ $isOpen = $tokoTutup !== '1' && $now >= $buka && $now <= $tutup && in_array($now
                         </div>
                         <div>
                             <div style="font-weight:700;font-size:.9rem;" id="status-text">
-                                <?= $tokoTutup=='1' ? '🔴 Toko Sedang TUTUP' : '🟢 Toko Sedang BUKA' ?>
+                                <?= $tokoTutup=='1' ? '🔴 Cafe Sedang TUTUP' : '🟢 Cafe Sedang BUKA' ?>
                             </div>
-                            <div style="font-size:.75rem;color:var(--text-muted);">Aktifkan untuk menutup toko sementara</div>
+                            <div style="font-size:.75rem;color:var(--text-muted);">Aktifkan untuk menutup Cafe sementara</div>
                         </div>
                     </label>
                 </div>
@@ -215,13 +215,13 @@ function updateStatusLabel(cb) {
     if (cb.checked) {
         label.style.background   = 'rgba(239,68,68,.08)';
         label.style.borderColor  = 'rgba(239,68,68,.2)';
-        text.textContent         = '🔴 Toko Sedang TUTUP';
+        text.textContent         = '🔴 Cafe Sedang TUTUP';
         toggle.style.background  = 'var(--error)';
         knob.style.left = 'auto'; knob.style.right = '3px';
     } else {
         label.style.background   = 'rgba(16,185,129,.08)';
         label.style.borderColor  = 'rgba(16,185,129,.2)';
-        text.textContent         = '🟢 Toko Sedang BUKA';
+        text.textContent         = '🟢 Cafe Sedang BUKA';
         toggle.style.background  = 'var(--success)';
         knob.style.right = 'auto'; knob.style.left = '3px';
     }

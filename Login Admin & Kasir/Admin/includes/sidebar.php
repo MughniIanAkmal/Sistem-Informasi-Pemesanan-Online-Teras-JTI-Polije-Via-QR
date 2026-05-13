@@ -1,10 +1,6 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-        <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="8 4"/>
-            <path d="M50 20C33.4315 20 20 33.4315 20 50C20 66.5685 33.4315 80 50 80C66.5685 80 80 66.5685 80 50" stroke="#0EA5E9" stroke-width="8" stroke-linecap="round"/>
-            <circle cx="50" cy="50" r="10" fill="#0EA5E9"/>
-        </svg>
+        <img src="../../../User/assets/img/Logo Teras JTI.png" alt="Logo Teras JTI" width="32" height="32" style="object-fit: contain;">
         <div style="font-weight: 800; font-size: 1.125rem; letter-spacing: -0.025em;">Teras JTI</div>
     </div>
 
@@ -32,14 +28,7 @@
         <li class="menu-item">
             <a href="../produk/index.php" class="menu-link <?= strpos($_SERVER['PHP_SELF'], 'produk') !== false ? 'active' : '' ?>">
                 <i class="fa-solid fa-utensils"></i>
-                <span class="menu-text">List Produk</span>
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="fa-solid fa-users"></i>
-                <span class="menu-text">Kelola User</span>
+                <span class="menu-text">Kelola Produk</span>
             </a>
         </li>
 

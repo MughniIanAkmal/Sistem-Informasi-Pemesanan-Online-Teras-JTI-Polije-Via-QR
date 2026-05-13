@@ -153,10 +153,10 @@ $harga_diskon = $produk['harga'] * (1 - ($produk['diskon'] / 100));
                             Diskon (%) <span style="color:var(--text-muted); font-weight:500;">0 = tanpa diskon</span>
                         </label>
                         <div style="position:relative; display:flex; align-items:center;">
-                            <input type="number" name="diskon" id="diskon-input" class="form-control" style="padding-left:1rem;"
+                            <input type="number" name="diskon" id="diskon-input" class="form-control" style="padding-left:1rem; padding-right:2.5rem;"
                                    value="<?= $produk['diskon'] ?? 0 ?>" min="0" max="100"
                                    oninput="updatePreview()">
-                            <span style="position:absolute; right:1rem; color:var(--text-muted); font-weight:700;">%</span>
+                            <i class="fa-solid fa-percent" style="position:absolute; right:1rem; color:var(--text-muted);"></i>
                         </div>
                     </div>
                     <div class="form-group">
@@ -262,6 +262,16 @@ $harga_diskon = $produk['harga'] * (1 - ($produk['diskon'] / 100));
 </main>
 
 <style>
+/* Hide spin buttons for diskon */
+#diskon-input::-webkit-outer-spin-button,
+#diskon-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#diskon-input {
+  -moz-appearance: textfield;
+}
+
 /* Toggle Switch */
 .promo-toggle {
     display: inline-flex;

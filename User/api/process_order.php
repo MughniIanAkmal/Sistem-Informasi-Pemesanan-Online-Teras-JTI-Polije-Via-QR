@@ -13,13 +13,14 @@ if (!$data || empty($data['cart'])) {
 $nomor_meja       = $data['nomor_meja']      ?? 'Tidak Diketahui';
 $total            = $data['total']            ?? 0;
 $payment_method   = $data['payment_method']  ?? 'Tidak Diketahui';
+$catatan          = $data['catatan']         ?? '';
 
 try {
     $pdo->beginTransaction();
 
-    // 1. Insert into pesanan (with nomor_meja, status 'Masuk')
-    $stmt = $pdo->prepare("INSERT INTO pesanan (nomor_meja, total_harga, metode_pembayaran, status) VALUES (?, ?, ?, 'Masuk')");
-    $stmt->execute([$nomor_meja, $total, $payment_method]);
+    // 1. Insert into pesanan (with nomor_meja, status 'Masuk', catatan)
+    $stmt = $pdo->prepare("INSERT INTO pesanan (nomor_meja, total_harga, metode_pembayaran, status, catatan) VALUES (?, ?, ?, 'Masuk', ?)");
+    $stmt->execute([$nomor_meja, $total, $payment_method, $catatan]);
     $pesanan_id = $pdo->lastInsertId();
 
     // 2. Insert into detail_pesanan (store nama_produk for historical record)

@@ -114,7 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem;">Diskon (%) <span style="color:var(--text-muted); font-weight:400;">opsional</span></label>
-                    <input type="number" name="diskon" class="form-control" placeholder="0" style="padding-left: 1rem;" min="0" max="100" value="0">
+                    <div style="position:relative; display:flex; align-items:center;">
+                        <input type="number" name="diskon" id="diskon-input" class="form-control" placeholder="0" style="padding-left: 1rem; padding-right:2.5rem;" min="0" max="100" value="0">
+                        <i class="fa-solid fa-percent" style="position:absolute; right:1rem; color:var(--text-muted);"></i>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem;">Tampil di Promo Spesial</label>
@@ -146,6 +149,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </main>
+
+<style>
+/* Hide spin buttons for diskon */
+#diskon-input::-webkit-outer-spin-button,
+#diskon-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#diskon-input {
+  -moz-appearance: textfield;
+}
+</style>
 
 <script>
 function previewImage(input) {

@@ -51,11 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="auth-card">
         <div class="auth-logo">
             <!-- Icon SVG mirip logo di gambar -->
-            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="10 5"/>
-                <path d="M50 20C33.4315 20 20 33.4315 20 50C20 66.5685 33.4315 80 50 80C66.5685 80 80 66.5685 80 50" stroke="#0EA5E9" stroke-width="8" stroke-linecap="round"/>
-                <circle cx="50" cy="50" r="10" fill="#0EA5E9"/>
-            </svg>
+            <img src="../../../User/assets/img/Logo Teras JTI.png" alt="Logo Teras JTI" width="60" height="60" style="object-fit: contain;">
             <div class="brand-name">TERAS JTI</div>
             <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-top: -10px;">BY ARSENET</div>
         </div>

@@ -37,13 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="auth-card">
         <div class="auth-logo">
-            <svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="#F59E0B" stroke-width="2" stroke-dasharray="10 5"/>
-                <rect x="22" y="30" width="56" height="40" rx="6" fill="#F59E0B" fill-opacity=".15" stroke="#F59E0B" stroke-width="3"/>
-                <path d="M32 44h36M32 54h22" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
-                <circle cx="68" cy="54" r="8" fill="#F59E0B"/>
-                <path d="M65 54l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="../../../User/assets/img/Logo Teras JTI.png" alt="Logo Teras JTI" width="60" height="60" style="object-fit: contain;">
             <div class="brand-name">TERAS JTI</div>
             <div style="font-size:.7rem; color:var(--text-muted); font-weight:700; margin-top:-6px; letter-spacing:.1em;">KASIR PANEL</div>
         </div>

@@ -57,14 +57,21 @@ function renderMenu() {
       const finalPrice = p.price_final ?? p.price;
       const hasDiskon  = p.diskon > 0;
       return `
-        <div class="promo-card" onclick="addToCart(${p.id})">
-          <img src="${p.img}" alt="${p.name}">
-          <div class="promo-info">
-            <div class="name">${p.name}</div>
-            ${hasDiskon ? `<div class="old-price" style="font-size:.75rem; text-decoration:line-through; color:rgba(255,255,255,.65); margin-bottom:1px;">Rp ${Number(p.price).toLocaleString('id-ID')}</div>` : ''}
-            <div class="new-price">Rp ${Number(finalPrice).toLocaleString('id-ID')}</div>
+        <div class="menu-card">
+          <div style="position:relative;">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            ${hasDiskon ? `<span style="position:absolute; top:.5rem; right:.5rem; background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; font-size:.65rem; font-weight:800; padding:2px 8px; border-radius:9999px;">-${p.diskon}%</span>` : ''}
+            <span style="position:absolute; top:.5rem; left:.5rem; background:linear-gradient(135deg,#f59e0b,#ef4444); color:#fff; font-size:.6rem; font-weight:800; padding:2px 7px; border-radius:9999px;">🔥</span>
           </div>
-          ${hasDiskon ? `<span class="promo-badge">-${p.diskon}%</span>` : '<span class="promo-badge">HOT</span>'}
+          <div class="menu-body">
+            <div class="menu-name">${p.name}</div>
+            <div class="menu-desc">${p.desc || ''}</div>
+            <div class="menu-price">
+              ${hasDiskon ? `<span style="font-size:.75rem; text-decoration:line-through; color:#94a3b8; margin-right:.25rem;">Rp ${Number(p.price).toLocaleString('id-ID')}</span>` : ''}
+              Rp ${Number(finalPrice).toLocaleString('id-ID')}
+            </div>
+            <button class="add-btn" onclick="addToCart(${p.id})">+ Tambahkan</button>
+          </div>
         </div>
       `;
     }).join('');
@@ -309,7 +316,8 @@ async function confirmOrder(method) {
         cart:           cart,
         total:          total,
         payment_method: method === 'qris' ? 'QRIS' : 'Tunai',
-        nomor_meja:     nomor_meja
+        nomor_meja:     nomor_meja,
+        catatan:        document.getElementById('cart-note')?.value.trim() || ''
       })
     });
     
@@ -401,7 +409,17 @@ function submitReservasi() {
   // Validasi
   if (!nama) { showToast('Harap isi nama lengkap!'); return; }
   if (!telp) { showToast('Harap isi nomor telepon!'); return; }
+  
+  // Validasi tambahan: Nomor telepon hanya boleh angka dan minimal 10 digit
+  const telpRegex = /^[0-9]+$/;
+  if (!telpRegex.test(telp)) { showToast('Nomor telepon hanya boleh berisi angka!'); return; }
+  if (telp.length < 10) { showToast('Nomor telepon minimal harus 10 angka!'); return; }
+
   if (!email) { showToast('Harap isi email!'); return; }
+
+  // Validasi tambahan: Email harus menggunakan format @gmail.com
+  if (!email.toLowerCase().endsWith('@gmail.com')) { showToast('Email harus menggunakan @gmail.com!'); return; }
+
   if (!tanggal) { showToast('Harap pilih tanggal!'); return; }
   if (!waktu) { showToast('Harap pilih waktu!'); return; }
 
