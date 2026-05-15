@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Kredensial kasir — bisa diganti dengan query DB
-    if ($username === 'Kasir' && $password === '123') {
+    if ($username === 'Kasir' && $password === 'benar123') {
         $_SESSION['kasir_logged_in'] = true;
         $_SESSION['kasir_user']      = $username;
         header('Location: ../dashboard/index.php');

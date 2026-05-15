@@ -332,6 +332,25 @@
   }
   .qty-btn:active { background: var(--blue-light); border-color: var(--blue); }
   .qty-num { font-size: 14px; font-weight: 800; color: var(--gray-800); min-width: 20px; text-align: center; }
+  /* Input langsung untuk edit qty */
+  .qty-input {
+    width: 42px;
+    height: 28px;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    background: var(--gray-50);
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--gray-800);
+    outline: none;
+    -moz-appearance: textfield;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .qty-input:focus { border-color: var(--blue); background: white; }
+  .qty-input::-webkit-outer-spin-button,
+  .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   .delete-btn {
     background: #FEE2E2;
     border: none;
@@ -547,7 +566,7 @@
   .cash-title { font-size: 16px; font-weight: 800; color: var(--gray-800); margin-bottom: 8px; }
   .cash-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; font-weight: 500; }
 
-  /* ───── SUCCESS TOAST ───── */
+  /* ───── TOAST (SUCCESS & ERROR) ───── */
   .toast {
     position: fixed;
     top: 20px; left: 50%;
@@ -564,6 +583,7 @@
     white-space: nowrap;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--red); }
 
   /* ───── EMPTY STATES ───── */
   .empty-menu {

@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Cek Login Admin
-    if (strtolower($username) === 'admin' && $password === '123') {
+    if (strtolower($username) === 'admin' && $password === 'benar123') {
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_user'] = 'Admin';
         header('Location: Admin/dashboard/index.php');
         exit;
     } 
     // Cek Login Kasir
-    elseif (strtolower($username) === 'kasir' && $password === '123') {
+    elseif (strtolower($username) === 'kasir' && $password === 'benar123') {
         $_SESSION['kasir_logged_in'] = true;
         $_SESSION['kasir_user'] = 'Kasir';
         header('Location: Kasir/dashboard/index.php');
