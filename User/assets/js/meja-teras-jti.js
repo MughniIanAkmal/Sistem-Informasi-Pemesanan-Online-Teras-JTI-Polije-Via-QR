@@ -161,21 +161,6 @@ function changeQty(id, delta) {
   updateCartBadge();
 }
 
-// Fungsi baru: set qty langsung dari input number
-function setQty(id, val) {
-  const item = cart.find(c => c.id == id);
-  if (!item) return;
-  const newQty = parseInt(val, 10);
-  if (isNaN(newQty) || newQty <= 0) {
-    // Kalau input invalid atau 0, hapus item
-    removeFromCart(id);
-  } else {
-    item.qty = newQty;
-    renderCart();
-  }
-  updateCartBadge();
-}
-
 function updateCartBadge() {
   const total = cart.reduce((s, c) => s + c.qty, 0);
   const badge = document.getElementById('cart-badge');
@@ -206,15 +191,7 @@ function renderCart() {
           <div class="cart-item-price">Rp ${Number(item.price).toLocaleString('id-ID')}</div>
           <div class="cart-item-actions">
             <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
-            <input
-              type="number"
-              class="qty-input"
-              value="${item.qty}"
-              min="1"
-              max="99"
-              onchange="setQty(${item.id}, this.value)"
-              onkeydown="if(event.key==='Enter') this.blur()"
-            >
+            <span class="qty-num">${item.qty}</span>
             <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
           </div>
         </div>
@@ -385,12 +362,10 @@ function closeModal(id) {
     document.body.style.overflow = '';
   }
 }
-function showToast(msg, isError = false) {
+function showToast(msg) {
   const t = document.getElementById('toast');
   if (t) {
     t.textContent = msg;
-    // Reset class, lalu tambahkan show + optional error
-    t.className = 'toast' + (isError ? ' error' : '');
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2000);
   }
@@ -432,21 +407,21 @@ function submitReservasi() {
   const tamu    = guestCount;
 
   // Validasi
-  if (!nama) { showToast('Harap isi nama lengkap!', true); return; }
-  if (!telp) { showToast('Harap isi nomor telepon!', true); return; }
+  if (!nama) { showToast('Harap isi nama lengkap!'); return; }
+  if (!telp) { showToast('Harap isi nomor telepon!'); return; }
   
   // Validasi tambahan: Nomor telepon hanya boleh angka dan minimal 10 digit
   const telpRegex = /^[0-9]+$/;
-  if (!telpRegex.test(telp)) { showToast('Nomor telepon hanya boleh berisi angka!', true); return; }
-  if (telp.length < 10) { showToast('Nomor telepon minimal harus 10 angka!', true); return; }
+  if (!telpRegex.test(telp)) { showToast('Nomor telepon hanya boleh berisi angka!'); return; }
+  if (telp.length < 10) { showToast('Nomor telepon minimal harus 10 angka!'); return; }
 
-  if (!email) { showToast('Harap isi email!', true); return; }
+  if (!email) { showToast('Harap isi email!'); return; }
 
   // Validasi tambahan: Email harus menggunakan format @gmail.com
-  if (!email.toLowerCase().endsWith('@gmail.com')) { showToast('Email harus menggunakan @gmail.com!', true); return; }
+  if (!email.toLowerCase().endsWith('@gmail.com')) { showToast('Email harus menggunakan @gmail.com!'); return; }
 
-  if (!tanggal) { showToast('Harap pilih tanggal!', true); return; }
-  if (!waktu)   { showToast('Harap pilih waktu!', true); return; }
+  if (!tanggal) { showToast('Harap pilih tanggal!'); return; }
+  if (!waktu) { showToast('Harap pilih waktu!'); return; }
 
   // Format tanggal ke dd/mm/yyyy
   const tglParts = tanggal.split('-');
@@ -485,17 +460,4 @@ window.addEventListener('load', () => {
   fetchMenu();
   // Initialize guest count display
   changeGuest(0);
-
-  // === BUG FIX: Cegah pemilihan tanggal lampau pada form Reservasi ===
-  // Ambil tanggal hari ini dalam format YYYY-MM-DD (format yang dipakai input type="date")
-  const today = new Date();
-  const yyyy  = today.getFullYear();
-  const mm    = String(today.getMonth() + 1).padStart(2, '0'); // bulan 0-index, jadi +1
-  const dd    = String(today.getDate()).padStart(2, '0');
-  const todayStr = `${yyyy}-${mm}-${dd}`;
-
-  const inputTanggal = document.getElementById('res-tanggal');
-  if (inputTanggal) {
-    inputTanggal.min = todayStr; // tanggal sebelum hari ini tidak bisa dipilih
-  }
 });
